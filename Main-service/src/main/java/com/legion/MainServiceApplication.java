@@ -1,13 +1,13 @@
-package com.legion.bandmaker;
+package com.legion;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BandMakerApplication {
+public class MainServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BandMakerApplication.class, args);
+		SpringApplication.run(MainServiceApplication.class, args);
 	}
 
 }
