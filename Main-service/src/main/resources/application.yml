@@ -11,6 +11,11 @@ general:
     username: postgres
     password: Hijikata1868
 
+  communication:
+    crm:
+      host: "http://localhost:8081"
+      url: "${general.communication.crm.host}/api/s2s"
+
 spring:
   application:
     name: band-maker
