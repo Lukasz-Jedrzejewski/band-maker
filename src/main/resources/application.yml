@@ -9,7 +9,7 @@ general:
     databasename: band_maker
     schemaname: general
     username: postgres
-    password:
+    password: Hijikata1868
 
 spring:
   application:
@@ -23,8 +23,8 @@ spring:
       pool-name: ${spring.application.name}-hikari-cp
       maximum-pool-size: 20
       leak-detection-threshold: 60000
-#  liquibase:
-#    change-log: classpath:/db-changelog/db-changelog-master.xml
+  liquibase:
+    change-log: classpath:/db/changelog/db-changelog-master.xml
   jpa:
     properties.hibernate.jdbc.lob.non_contextual_creation: true
     open-in-view: false
