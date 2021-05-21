@@ -35,6 +35,9 @@ data class InstitutionData (
         @Column(name = "phone_number")
         val phoneNumber: String?,
 
+        @Column(name = "description")
+        val description: String,
+
         @Column(name = "creation_date")
         override val createDate: Instant = Instant.now(),
 

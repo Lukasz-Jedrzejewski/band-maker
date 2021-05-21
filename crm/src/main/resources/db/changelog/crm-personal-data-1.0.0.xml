@@ -27,6 +27,9 @@
             <column name="vocal" type="boolean">
                 <constraints nullable="false" unique="false"/>
             </column>
+            <column name="desription" type="longtext">
+                <constraints nullable="false" unique="false"/>
+            </column>
             <column name="creation_date" type="timestamptz">
                 <constraints nullable="false" unique="false"/>
             </column>

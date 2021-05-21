@@ -35,6 +35,9 @@ data class PersonalData (
         @Column(name = "vocal")
         val vocal: Boolean,
 
+        @Column(name = "description")
+        val description: String,
+
         @Column(name = "creation_date")
         override val createDate: Instant = Instant.now(),
 
