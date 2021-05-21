@@ -2,12 +2,10 @@ package com.legion.band.entity
 
 import com.legion.common.CrmEntity
 import com.legion.common.DataEntity
+import com.legion.user.entity.User
 import java.time.Instant
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "band_data")
@@ -31,6 +29,10 @@ data class BandData (
 
         @Column(name = "description")
         val description: String,
+
+        @OneToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "user_id")
+        val user: User,
 
         @Column(name = "creation_date")
         override val createDate: Instant = Instant.now(),
