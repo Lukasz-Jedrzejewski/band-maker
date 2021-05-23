@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1.0.0-1" author="legion">
+        <createTable tableName="personal_data">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" unique="true" primaryKeyName="personal_data_pk"
+                             uniqueConstraintName="personal_data_id_uq"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="surname" type="varchar(255)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="city" type="varchar(255)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="alias" type="varchar(255)">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column name="instrument" type="varchar(50)">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column name="vocal" type="boolean">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="desription" type="longtext">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="creation_date" type="timestamptz">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="update_date" type="timestamptz">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column name="removed" type="boolean">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,37 @@
+server:
+  port: 8080
+  servlet.context-path: /api/
+
+general:
+  db:
+    host: localhost
+    port: 5433
+    databasename: band_maker
+    schemaname: general
+    username: postgres
+    password: Hijikata1868
+
+  communication:
+    crm:
+      host: "http://localhost:8081"
+      url: "${general.communication.crm.host}/api/s2s"
+
+spring:
+  application:
+    name: band-maker
+  datasource:
+    url: jdbc:postgresql://${general.db.host}:${general.db.port}/${general.db.databasename}?currentSchema=${general.db.schemaname}
+    username: ${general.db.username}
+    password: ${general.db.password}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: ${spring.application.name}-hikari-cp
+      maximum-pool-size: 20
+      leak-detection-threshold: 60000
+  liquibase:
+    change-log: classpath:/db/changelog/db-changelog-master.xml
+  jpa:
+    properties.hibernate.jdbc.lob.non_contextual_creation: true
+    open-in-view: false
+    properties:
+      hibernate.default_schema: ${general.db.schemaname}

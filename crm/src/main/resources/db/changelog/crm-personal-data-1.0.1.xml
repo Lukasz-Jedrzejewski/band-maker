@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1.0.0-2" author="legion">
+
+        <addColumn tableName="personal_data">
+            <column name="user_id" type="uuid">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="personal_data"
+                                 baseColumnNames="user_id"
+                                 constraintName="personal_data_user_id_fk"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+        />
+
+        <createIndex clustered="false"
+                     tableName="personal_data"
+                     indexName="personal_data_user_id_index"
+                     unique="false">
+            <column name="user_id"/>
+        </createIndex>
+
+    </changeSet>
+</databaseChangeLog>
