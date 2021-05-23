@@ -15,6 +15,9 @@
             <column name="password" type="varchar2(255)">
                 <constraints nullable="false" unique="false"/>
             </column>
+            <column name="user_type" type="varchar2(20)">
+                <constraints nullable="false" unique="false"/>
+            </column>
             <column name="creation_date" type="timestamptz">
                 <constraints nullable="false" unique="false"/>
             </column>

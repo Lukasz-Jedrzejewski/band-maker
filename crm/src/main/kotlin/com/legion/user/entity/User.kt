@@ -19,6 +19,9 @@ data class User (
         @Column(name = "email")
         val email: String,
 
+        @Column(name = "user_type")
+        val userType: UserType,
+
         @Column(name = "password")
         val password: String,
 

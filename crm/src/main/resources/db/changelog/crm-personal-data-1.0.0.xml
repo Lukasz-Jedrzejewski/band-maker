@@ -21,7 +21,7 @@
             <column name="alias" type="varchar(255)">
                 <constraints nullable="true" unique="false"/>
             </column>
-            <column name="instrument" type="varchar(255)">
+            <column name="instrument" type="varchar(50)">
                 <constraints nullable="true" unique="false"/>
             </column>
             <column name="vocal" type="boolean">
