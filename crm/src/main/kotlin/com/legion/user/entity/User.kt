@@ -1,10 +1,13 @@
 package com.legion.user.entity
 
 import com.legion.common.CrmEntity
+import lombok.NoArgsConstructor
 import java.time.Instant
-import java.util.*
+import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.Id
 import javax.persistence.Table
 
@@ -20,6 +23,7 @@ data class User (
         val email: String,
 
         @Column(name = "user_type")
+        @Enumerated(EnumType.STRING)
         val userType: UserType,
 
         @Column(name = "password")
