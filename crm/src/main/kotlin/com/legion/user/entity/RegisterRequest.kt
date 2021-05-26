@@ -1,6 +1,9 @@
 package com.legion.user.entity
 
-data class RegisterRequest(
+import com.fasterxml.jackson.annotation.JsonCreator
+
+
+data class RegisterRequest (
         val email: String,
         val password: String,
         val userType: UserType
