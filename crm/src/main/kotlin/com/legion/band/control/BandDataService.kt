@@ -40,9 +40,10 @@ class BandDataService @Autowired constructor(
                 description = bandDataRequest.description,
                 user = user
         )
-        return bandDataRepository.save(bandData)
-
+        val createdData = bandDataRepository.save(bandData)
         logger.debug { "Band data for user with id: $userId created" }
+
+        return createdData
     }
 
     private fun update(bandData: BandData, bandDataRequest: BandDataRequest): BandData {
@@ -53,8 +54,9 @@ class BandDataService @Autowired constructor(
                 genre = bandDataRequest.genre,
                 description = bandDataRequest.description
         )
-        return bandDataRepository.save(updated)
+        val updatedData = bandDataRepository.save(updated)
+        logger.debug { "Band data for user with id: ${bandData.user.id} updated" }
 
-        logger.debug { "Band data for user with id: ${bandData.user.id} created" }
+        return updatedData
     }
 }

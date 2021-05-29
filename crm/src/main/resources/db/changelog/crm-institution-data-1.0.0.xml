@@ -27,7 +27,7 @@
             <column name="phone_number" type="varchar(20)">
                 <constraints nullable="true" unique="false"/>
             </column>
-            <column name="desription" type="longtext">
+            <column name="description" type="longtext">
                 <constraints nullable="false" unique="false"/>
             </column>
             <column name="creation_date" type="timestamptz">
