@@ -5,6 +5,7 @@ import com.legion.user.entity.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import mu.KotlinLogging
+import java.util.*
 
 @Service
 class UserService @Autowired constructor(
@@ -22,5 +23,9 @@ class UserService @Autowired constructor(
         logger.debug { "User with email: ${savedUser.email} created" }
 
         return savedUser;
+    }
+
+    fun getById(userId: UUID): User {
+        return userRepository.getById(userId)
     }
 }
