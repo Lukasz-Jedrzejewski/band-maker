@@ -28,4 +28,13 @@ class UserService @Autowired constructor(
     fun getById(userId: UUID): User {
         return userRepository.getById(userId)
     }
+
+    fun changePassword(userId: UUID, newPassword: String): User {
+        val user = userRepository.getById(userId)
+        val updated = user.copy(password = newPassword)
+        val updatedUser = userRepository.save(updated)
+        logger.debug { "Password for user with id: $userId updated" }
+
+        return updatedUser
+    }
 }
