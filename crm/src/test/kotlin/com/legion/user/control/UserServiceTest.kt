@@ -18,9 +18,9 @@ import org.assertj.core.api.Assertions.assertThat
 class UserServiceTest {
 
     @Mock
-    lateinit var userRepository: UserRepository
+    private lateinit var userRepository: UserRepository
 
-    lateinit var userService: UserService
+    private lateinit var userService: UserService
 
     private val user = getTestUser()
     private val request = getTestRegisterRequest()
@@ -31,7 +31,7 @@ class UserServiceTest {
     }
 
     @Test
-    fun register() {
+    fun `should register new user`() {
         // given
         whenever(userRepository.save(any())).thenReturn(user)
 
@@ -41,6 +41,36 @@ class UserServiceTest {
         // then
         verify(userRepository, times(1)).save(any())
         assertThat(result).isEqualTo(user)
+    }
+
+    @Test
+    fun `should return user with given id`() {
+        // given
+        whenever(userRepository.getById(any())).thenReturn(user)
+
+        // when
+        val result = userService.getById(user.id)
+
+        // then
+        verify(userRepository, times(1)).getById(any())
+        assertThat(result).isEqualTo(user)
+    }
+
+    @Test
+    fun `should change password for user with given id`() {
+        // given
+        val newPassword = "newTestPassword"
+        val updated = user.copy(password = newPassword)
+        whenever(userRepository.getById(any())).thenReturn(user)
+        whenever(userRepository.save(any())).thenReturn(updated)
+
+        // when
+        val result = userService.changePassword(user.id, newPassword)
+
+        // then
+        verify(userRepository, times(1)).getById(any())
+        verify(userRepository, times(1)).save(any())
+        assertThat(result).isEqualTo(updated)
     }
 
 
