@@ -68,4 +68,27 @@ class UserIntegrationTest {
         assertThat(result[0].id).isNotNull
         assertThat(result[0].email).isEqualTo(request.email)
     }
+
+    @Test
+    fun `should change password for user with given id`() {
+        // given
+        val saved = userRepository.save(user)
+        val newPassword = "newTestPass"
+
+        // when
+        mvc.perform(MockMvcRequestBuilders
+                .put("/users/${saved.id}", saved.id)
+                .param("newPassword", newPassword)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(user.email))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.password").value(newPassword))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+
+        // then
+        val result = userRepository.findAll()
+        assertThat(result.size).isEqualTo(1)
+        assertThat(result[0].id).isNotNull
+        assertThat(result[0].email).isEqualTo(user.email)
+        assertThat(result[0].password).isEqualTo(newPassword)
+    }
 }
