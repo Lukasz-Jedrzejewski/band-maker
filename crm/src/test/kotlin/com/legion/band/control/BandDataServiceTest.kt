@@ -1,11 +1,10 @@
 package com.legion.band.control
 
-import com.legion.band.entity.BandData
 import com.legion.user.control.UserRepository
 import com.legion.user.control.UserService
-import com.legion.user.tools.objectFactories.getTestBandData
-import com.legion.user.tools.objectFactories.getTestBandDataRequest
-import com.legion.user.tools.objectFactories.getTestUser
+import com.legion.tools.objectFactories.getTestBandData
+import com.legion.tools.objectFactories.getTestBandDataRequest
+import com.legion.tools.objectFactories.getTestUser
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify

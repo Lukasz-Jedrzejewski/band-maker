@@ -1,4 +1,4 @@
-package com.legion.user.tools.objectFactories
+package com.legion.tools.objectFactories
 
 import com.legion.band.entity.BandData
 import com.legion.band.entity.BandDataRequest
@@ -22,7 +22,7 @@ fun getTestBandData(
 fun getTestBandDataRequest(
         name: String = "${UUID.randomUUID()}",
         city: String = "${UUID.randomUUID()}",
-        phoneNumber: String? = "${UUID.randomUUID()}",
+        phoneNumber: String? = "321321321",
         genre: String = "${UUID.randomUUID()}",
         description: String = "${UUID.randomUUID()}"
 ) = BandDataRequest(name, city, phoneNumber, genre, description)

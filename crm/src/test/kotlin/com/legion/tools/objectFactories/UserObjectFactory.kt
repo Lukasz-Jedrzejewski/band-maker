@@ -1,4 +1,4 @@
-package com.legion.user.tools.objectFactories
+package com.legion.tools.objectFactories
 
 import com.legion.user.entity.RegisterRequest
 import com.legion.user.entity.User

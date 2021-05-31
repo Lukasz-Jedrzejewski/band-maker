@@ -1,8 +1,7 @@
 package com.legion.user.control
 
-import com.legion.user.entity.User
-import com.legion.user.tools.objectFactories.getTestRegisterRequest
-import com.legion.user.tools.objectFactories.getTestUser
+import com.legion.tools.objectFactories.getTestRegisterRequest
+import com.legion.tools.objectFactories.getTestUser
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify

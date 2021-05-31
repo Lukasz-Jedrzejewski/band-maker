@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.legion.CrmApplication
 import com.legion.user.control.UserRepository
 import com.legion.user.control.UserService
-import com.legion.user.tools.DatabaseCleaner
-import com.legion.user.tools.objectFactories.getTestRegisterRequest
-import com.legion.user.tools.objectFactories.getTestUser
+import com.legion.tools.DatabaseCleaner
+import com.legion.tools.objectFactories.getTestRegisterRequest
+import com.legion.tools.objectFactories.getTestUser
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,9 +33,6 @@ class UserIntegrationTest {
 
     @Autowired
     private lateinit var objectMapper: ObjectMapper
-
-    @Autowired
-    private lateinit var userService: UserService
 
     @Autowired
     private lateinit var userRepository: UserRepository
