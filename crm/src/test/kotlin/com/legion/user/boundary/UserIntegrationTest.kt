@@ -2,11 +2,11 @@ package com.legion.user.boundary
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.legion.CrmApplication
-import com.legion.user.control.UserRepository
-import com.legion.user.control.UserService
 import com.legion.tools.DatabaseCleaner
 import com.legion.tools.objectFactories.getTestRegisterRequest
 import com.legion.tools.objectFactories.getTestUser
+import com.legion.user.control.UserRepository
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,7 +18,6 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
-import org.assertj.core.api.Assertions.assertThat
 
 @EnableWebMvc
 @RunWith(SpringRunner::class)
