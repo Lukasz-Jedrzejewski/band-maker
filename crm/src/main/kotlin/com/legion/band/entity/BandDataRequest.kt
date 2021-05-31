@@ -5,5 +5,5 @@ data class BandDataRequest (
         val city: String,
         val phoneNumber: String?,
         val genre: String,
-        val description: String,
+        val description: String
 )
