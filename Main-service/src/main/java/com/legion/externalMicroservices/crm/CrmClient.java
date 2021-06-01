@@ -1,14 +1,18 @@
 package com.legion.externalMicroservices.crm;
 
+import com.legion.externalMicroservices.crm.tools.PathBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
-public class CrmClient {
+public class CrmClient extends PathBuilder {
 
     private final RestTemplate restTemplate;
 
@@ -21,8 +25,9 @@ public class CrmClient {
 
     private final String CRM_PATH = "/test";
 
-    public ResponseEntity<String> makeConnection() {
-        String fullPath = url + CRM_PATH;
-        return restTemplate.exchange(fullPath, HttpMethod.GET, null, String.class);
+    public String makeConnection() {
+        String uri = buildUri(buildUrl(url, CRM_PATH), null);
+
+        return restTemplate.getForObject(uri, String.class);
     }
 }
