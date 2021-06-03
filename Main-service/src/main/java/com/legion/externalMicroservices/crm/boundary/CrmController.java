@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/crm")
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class CrmController {
     private final CrmClient crmClient;
 
     @PostMapping
-    public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<User> register(@Valid @RequestBody RegisterRequest registerRequest) {
         return crmClient.register(registerRequest);
     }
 }
