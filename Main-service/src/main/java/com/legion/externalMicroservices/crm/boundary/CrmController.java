@@ -1,6 +1,7 @@
 package com.legion.externalMicroservices.crm.boundary;
 
 import com.legion.externalMicroservices.crm.CrmClient;
+import com.legion.externalMicroservices.crm.control.UserService;
 import com.legion.externalMicroservices.crm.identityObjects.RegisterRequest;
 import com.legion.externalMicroservices.crm.identityObjects.User;
 import lombok.AllArgsConstructor;
@@ -17,10 +18,10 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class CrmController {
 
-    private final CrmClient crmClient;
+    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<User> register(@Valid @RequestBody RegisterRequest registerRequest) {
-        return crmClient.register(registerRequest);
+        return userService.register(registerRequest);
     }
 }
