@@ -37,4 +37,8 @@ class UserService @Autowired constructor(
 
         return updatedUser
     }
+
+    fun existsByEmail(email: String): Boolean {
+        return userRepository.existsByEmail(email)
+    }
 }

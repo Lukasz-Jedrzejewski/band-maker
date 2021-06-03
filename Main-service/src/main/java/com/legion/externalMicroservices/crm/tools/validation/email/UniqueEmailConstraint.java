@@ -5,11 +5,11 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = EmailValidator.class)
+@Constraint(validatedBy = UniqueEmailValidator.class)
 @Target( { ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface EmailConstraint {
-    String message() default "Invalid email";
+public @interface UniqueEmailConstraint {
+    String message() default "User with given email already exist";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
