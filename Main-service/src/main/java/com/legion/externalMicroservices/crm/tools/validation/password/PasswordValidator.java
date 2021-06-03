@@ -1,4 +1,4 @@
-package com.legion.externalMicroservices.crm.tools.validation;
+package com.legion.externalMicroservices.crm.tools.validation.password;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
