@@ -4,10 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.legion.externalMicroservices.crm.control.CrmClient;
 import com.legion.externalMicroservices.crm.identityObjects.RegisterRequest;
 import com.legion.externalMicroservices.crm.identityObjects.User;
+import com.legion.user.model.PasswordResetRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -17,13 +21,21 @@ public class ExternalUserService {
     private final CrmClient crmClient;
     private final ObjectMapper mapper;
 
-    public ResponseEntity<User> register(RegisterRequest registerRequest) {
-        registerRequest.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        return crmClient.register(registerRequest);
+    public ResponseEntity<User> register(RegisterRequest request) {
+        request.setPassword(passwordEncoder.encode(request.getPassword()));
+        return crmClient.register(request);
     }
 
     public boolean existsByEmail(String email) {
         ResponseEntity<Boolean> result = crmClient.existsByEmail(email);
         return Boolean.parseBoolean(String.valueOf(result.getBody()));
+    }
+
+    public ResponseEntity<?> changePassword(PasswordResetRequest request, UUID id) {
+        if (request.getNewPassword().equals(request.getConfirmPassword())) {
+            return crmClient.setPassword(request.getNewPassword(), id);
+        } else {
+            return new ResponseEntity<String>("The passwords don`t match", HttpStatus.CONFLICT);
+        }
     }
 }

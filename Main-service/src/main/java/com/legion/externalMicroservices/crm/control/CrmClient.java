@@ -13,6 +13,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.UUID;
+
 @Component
 public class CrmClient extends PathBuilder {
 
@@ -25,12 +27,13 @@ public class CrmClient extends PathBuilder {
     @Value("${general.communication.crm.url}")
     private String url;
 
-    private final String REGISTER_PATH = "/users";
+    private final String USER_PATH = "/users";
 
     private final String EMAIL_PARAM = "email";
+    private final String NEW_PASSWORD_PARAM = "newPassword";
 
     public ResponseEntity<User> register(RegisterRequest registerRequest) {
-        String uri = buildUri(buildUrl(url, REGISTER_PATH), null);
+        String uri = buildUri(buildUrl(url, USER_PATH), null);
 
         return restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(registerRequest), User.class);
     }
@@ -38,8 +41,16 @@ public class CrmClient extends PathBuilder {
     public ResponseEntity<Boolean> existsByEmail(String email) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add(EMAIL_PARAM, email);
-        String uri = buildUri(buildUrl(url, REGISTER_PATH), params);
+        String uri = buildUri(buildUrl(url, USER_PATH), params);
 
         return restTemplate.exchange(uri, HttpMethod.GET, null, Boolean.class);
+    }
+
+    public ResponseEntity<?> setPassword(String newPassword, UUID id) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add(NEW_PASSWORD_PARAM, newPassword);
+        String uri = buildUri(buildUrl(url, USER_PATH+"/"+id), params);
+
+        return restTemplate.exchange(uri, HttpMethod.PUT, null, User.class);
     }
 }
