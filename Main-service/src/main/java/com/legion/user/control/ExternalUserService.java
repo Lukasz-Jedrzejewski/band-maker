@@ -1,7 +1,7 @@
-package com.legion.externalMicroservices.crm.control;
+package com.legion.user.control;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.legion.externalMicroservices.crm.CrmClient;
+import com.legion.externalMicroservices.crm.control.CrmClient;
 import com.legion.externalMicroservices.crm.identityObjects.RegisterRequest;
 import com.legion.externalMicroservices.crm.identityObjects.User;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class ExternalUserService {
 
     private final BCryptPasswordEncoder passwordEncoder;
     private final CrmClient crmClient;

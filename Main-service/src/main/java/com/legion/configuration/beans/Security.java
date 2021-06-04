@@ -1,4 +1,4 @@
-package com.legion.externalMicroservices.crm.configuration.beans;
+package com.legion.configuration.beans;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

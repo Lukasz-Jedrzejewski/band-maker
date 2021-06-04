@@ -1,8 +1,8 @@
-package com.legion.externalMicroservices.crm;
+package com.legion.externalMicroservices.crm.control;
 
 import com.legion.externalMicroservices.crm.identityObjects.RegisterRequest;
 import com.legion.externalMicroservices.crm.identityObjects.User;
-import com.legion.externalMicroservices.crm.tools.PathBuilder;
+import com.legion.tools.PathBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;

@@ -1,4 +1,4 @@
-package com.legion.externalMicroservices.crm.tools;
+package com.legion.tools;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
