@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.legion.externalMicroservices.crm.control.CrmClient;
 import com.legion.externalMicroservices.crm.identityObjects.RegisterRequest;
 import com.legion.externalMicroservices.crm.identityObjects.User;
+import com.legion.externalMicroservices.crm.identityObjects.UserType;
 import com.legion.user.model.PasswordResetRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,5 +38,26 @@ public class ExternalUserService {
         } else {
             return new ResponseEntity<String>("The passwords don`t match", HttpStatus.CONFLICT);
         }
+    }
+
+    public ResponseEntity<?> saveUserData(UUID id, Object object) {
+        User user = crmClient.getById(id).getBody();
+        assert user != null;
+        UserType type = UserType.getByName(user.getUserType());
+        ResponseEntity<?> result = null;
+        switch (type) {
+            case BAND:
+                // instructions for BandData
+                break;
+            case LOCAL:
+                // instructions for InstitutionData
+                break;
+            case MUSICIAN:
+                 result = crmClient.savePersonalData(user.getId(), object);
+                break;
+            default:
+                break;
+        }
+        return result;
     }
 }

@@ -1,5 +1,6 @@
 package com.legion.user.boundary;
 
+import com.legion.externalMicroservices.crm.identityObjects.PersonalData;
 import com.legion.user.control.ExternalUserService;
 import com.legion.externalMicroservices.crm.identityObjects.RegisterRequest;
 import com.legion.externalMicroservices.crm.identityObjects.User;
@@ -27,5 +28,10 @@ public class ExternalUserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> setPassword(@Valid @PathVariable UUID id, @RequestBody PasswordResetRequest request) {
         return externalUserService.changePassword(request, id);
+    }
+
+    @PostMapping("/personal-data")
+    public ResponseEntity<PersonalData> savePersonalData(@RequestBody Object object, @RequestParam UUID id) {
+        return (ResponseEntity<PersonalData>) externalUserService.saveUserData(id, object);
     }
 }
