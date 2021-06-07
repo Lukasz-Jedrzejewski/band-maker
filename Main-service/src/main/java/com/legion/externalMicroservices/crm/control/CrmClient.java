@@ -1,9 +1,7 @@
 package com.legion.externalMicroservices.crm.control;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.legion.externalMicroservices.crm.identityObjects.PersonalData;
-import com.legion.externalMicroservices.crm.identityObjects.RegisterRequest;
-import com.legion.externalMicroservices.crm.identityObjects.User;
+import com.legion.externalMicroservices.crm.identityObjects.*;
 import com.legion.tools.PathBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -34,6 +32,7 @@ public class CrmClient extends PathBuilder {
 
     private final String USER_PATH = "/users";
     private final String PERSONAL_DATA_PATH = "/personal-data";
+    private final String INSTITUTION_DATA_PATH = "/institution-data";
 
     private final String EMAIL_PARAM = "email";
     private final String NEW_PASSWORD_PARAM = "newPassword";
@@ -60,16 +59,23 @@ public class CrmClient extends PathBuilder {
         return restTemplate.exchange(uri, HttpMethod.PUT, null, User.class);
     }
 
+    public ResponseEntity<User> getById(UUID id) {
+        String uri = buildUri(buildUrl(url, USER_PATH+"/"+id), null);
+
+        return restTemplate.exchange(uri, HttpMethod.GET, null, User.class);
+    }
+
     public ResponseEntity<?> savePersonalData(UUID id, Object object) {
-        PersonalData personalData = mapper.convertValue(object, PersonalData.class);
+        PersonalDataRequest personalData = mapper.convertValue(object, PersonalDataRequest.class);
         String uri = buildUri(buildUrl(url, PERSONAL_DATA_PATH+"/"+id), null);
 
         return restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(personalData), PersonalData.class);
     }
 
-    public ResponseEntity<User> getById(UUID id) {
-        String uri = buildUri(buildUrl(url, USER_PATH+"/"+id), null);
+    public ResponseEntity<?> saveInstitutionData(UUID id, Object object) {
+        InstitutionDataRequest institutionData = mapper.convertValue(object, InstitutionDataRequest.class);
+        String uri = buildUri(buildUrl(url, INSTITUTION_DATA_PATH+"/"+id), null);
 
-        return restTemplate.exchange(uri, HttpMethod.GET, null, User.class);
+        return restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(institutionData), InstitutionData.class);
     }
 }

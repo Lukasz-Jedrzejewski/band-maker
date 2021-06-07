@@ -50,7 +50,7 @@ public class ExternalUserService {
                 // instructions for BandData
                 break;
             case LOCAL:
-                // instructions for InstitutionData
+                result = crmClient.saveInstitutionData(user.getId(), object);
                 break;
             case MUSICIAN:
                  result = crmClient.savePersonalData(user.getId(), object);

@@ -1,5 +1,6 @@
 package com.legion.user.boundary;
 
+import com.legion.externalMicroservices.crm.identityObjects.InstitutionData;
 import com.legion.externalMicroservices.crm.identityObjects.PersonalData;
 import com.legion.user.control.ExternalUserService;
 import com.legion.externalMicroservices.crm.identityObjects.RegisterRequest;
@@ -33,5 +34,10 @@ public class ExternalUserController {
     @PostMapping("/personal-data")
     public ResponseEntity<PersonalData> savePersonalData(@RequestBody Object object, @RequestParam UUID id) {
         return (ResponseEntity<PersonalData>) externalUserService.saveUserData(id, object);
+    }
+
+    @PostMapping("/institution-data")
+    public ResponseEntity<InstitutionData> saveInstitutionData(@RequestBody Object object, @RequestParam UUID id) {
+        return (ResponseEntity<InstitutionData>) externalUserService.saveUserData(id, object);
     }
 }
