@@ -1,4 +1,4 @@
-package com.legion.externalMicroservices.crm.tools;
+package com.legion.tools;
 
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
