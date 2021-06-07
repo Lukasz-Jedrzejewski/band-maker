@@ -28,18 +28,8 @@ public class ExternalUserController {
         return externalUserService.changePassword(request, id);
     }
 
-    @PostMapping("/personal-data")
-    public ResponseEntity<PersonalData> savePersonalData(@RequestBody Object object, @RequestParam UUID id) {
-        return (ResponseEntity<PersonalData>) externalUserService.saveUserData(id, object);
-    }
-
-    @PostMapping("/institution-data")
-    public ResponseEntity<InstitutionData> saveInstitutionData(@RequestBody Object object, @RequestParam UUID id) {
-        return (ResponseEntity<InstitutionData>) externalUserService.saveUserData(id, object);
-    }
-
-    @PostMapping("/band-data")
-    public ResponseEntity<BandData> saveBandData(@RequestBody Object object, @RequestParam UUID id) {
-        return (ResponseEntity<BandData>) externalUserService.saveUserData(id, object);
+    @PostMapping("/data")
+    public ResponseEntity<?> saveData(@RequestBody Object object, @RequestParam UUID id) {
+        return externalUserService.saveUserData(id, object);
     }
 }
