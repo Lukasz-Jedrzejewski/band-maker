@@ -33,6 +33,7 @@ public class CrmClient extends PathBuilder {
     private final String USER_PATH = "/users";
     private final String PERSONAL_DATA_PATH = "/personal-data";
     private final String INSTITUTION_DATA_PATH = "/institution-data";
+    private final String BAND_DATA_PATH = "/band-data";
 
     private final String EMAIL_PARAM = "email";
     private final String NEW_PASSWORD_PARAM = "newPassword";
@@ -77,5 +78,12 @@ public class CrmClient extends PathBuilder {
         String uri = buildUri(buildUrl(url, INSTITUTION_DATA_PATH+"/"+id), null);
 
         return restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(institutionData), InstitutionData.class);
+    }
+
+    public ResponseEntity<?> saveBandData(UUID id, Object object) {
+        BandDataRequest bandData = mapper.convertValue(object, BandDataRequest.class);
+        String uri = buildUri(buildUrl(url, BAND_DATA_PATH+"/"+id), null);
+
+        return restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(bandData), BandData.class);
     }
 }

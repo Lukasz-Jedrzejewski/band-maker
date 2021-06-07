@@ -1,10 +1,7 @@
 package com.legion.user.boundary;
 
-import com.legion.externalMicroservices.crm.identityObjects.InstitutionData;
-import com.legion.externalMicroservices.crm.identityObjects.PersonalData;
+import com.legion.externalMicroservices.crm.identityObjects.*;
 import com.legion.user.control.ExternalUserService;
-import com.legion.externalMicroservices.crm.identityObjects.RegisterRequest;
-import com.legion.externalMicroservices.crm.identityObjects.User;
 import com.legion.user.model.PasswordResetRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +36,10 @@ public class ExternalUserController {
     @PostMapping("/institution-data")
     public ResponseEntity<InstitutionData> saveInstitutionData(@RequestBody Object object, @RequestParam UUID id) {
         return (ResponseEntity<InstitutionData>) externalUserService.saveUserData(id, object);
+    }
+
+    @PostMapping("/band-data")
+    public ResponseEntity<BandData> saveBandData(@RequestBody Object object, @RequestParam UUID id) {
+        return (ResponseEntity<BandData>) externalUserService.saveUserData(id, object);
     }
 }

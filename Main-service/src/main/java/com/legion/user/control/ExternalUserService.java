@@ -47,7 +47,7 @@ public class ExternalUserService {
         ResponseEntity<?> result = null;
         switch (type) {
             case BAND:
-                // instructions for BandData
+                result = crmClient.saveBandData(user.getId(), object);
                 break;
             case LOCAL:
                 result = crmClient.saveInstitutionData(user.getId(), object);
