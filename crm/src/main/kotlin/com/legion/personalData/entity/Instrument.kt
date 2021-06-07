@@ -5,5 +5,11 @@ enum class Instrument(val instrumentName: String) {
     BASS_GUITAR("gitara basowa"),
     CLASSIC_GUITAR("gitara klasyczna"),
     ACOUSTIC_GUITAR("gitara klasyczna"),
-    DRUMS("perkusja")
+    DRUMS("perkusja");
+
+    override fun toString(): String {
+        return instrumentName;
+    }
+
+
 }

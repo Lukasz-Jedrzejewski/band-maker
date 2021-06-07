@@ -37,4 +37,9 @@ class UserController @Autowired constructor(
     fun existByEmail(@RequestParam email: String): ResponseEntity<Boolean> {
         return ResponseEntity(userService.existsByEmail(email), HttpStatus.OK)
     }
+
+    @GetMapping("/{id}")
+    fun getById(@PathVariable id: UUID): ResponseEntity<User> {
+        return ResponseEntity(userService.getById(id), HttpStatus.OK)
+    }
 }

@@ -1,6 +1,6 @@
-package com.legion.externalMicroservices.crm.tools.validation.email;
+package com.legion.tools.validation.email;
 
-import com.legion.externalMicroservices.crm.control.UserService;
+import com.legion.user.control.ExternalUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 public class UniqueEmailValidator implements ConstraintValidator<UniqueEmailConstraint, String> {
 
     @Autowired
-    private UserService userService;
+    private ExternalUserService externalUserService;
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext ctx) {
@@ -22,6 +22,6 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmailCons
     }
 
     private boolean exists(String email) {
-        return userService.existsByEmail(email);
+        return externalUserService.existsByEmail(email);
     }
 }
