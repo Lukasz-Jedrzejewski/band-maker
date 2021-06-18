@@ -1,21 +1,21 @@
 package com.legion
 
-import io.restassured.RestAssured
+import com.legion.test.TestController
+import com.legion.user.boundary.UserController
+import com.legion.user.control.UserService
+import io.restassured.module.mockmvc.RestAssuredMockMvc
 import org.junit.jupiter.api.BeforeEach
-import org.springframework.beans.factory.annotation.Value
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-
 
 @SpringBootTest(classes = [CrmApplication::class])
 open class BaseClass {
 
-    @Value("\${server.port}")
-    var port: Int = 0
+    @Autowired
+    lateinit var userService: UserService
 
     @BeforeEach
     fun setUp() {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = port;
-//        RestAssuredMockMvc.standaloneSetup(testController)
+        RestAssuredMockMvc.standaloneSetup(TestController(), UserController(userService))
     }
 }

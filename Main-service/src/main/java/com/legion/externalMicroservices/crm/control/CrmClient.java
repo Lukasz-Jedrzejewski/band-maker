@@ -4,16 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.legion.externalMicroservices.crm.identityObjects.*;
 import com.legion.tools.PathBuilder;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -22,8 +18,8 @@ public class CrmClient extends PathBuilder {
     private final RestTemplate restTemplate;
     private final ObjectMapper mapper;
 
-    public CrmClient(RestTemplateBuilder builder, ObjectMapper mapper) {
-        this.restTemplate = builder.build();
+    public CrmClient(RestTemplate restTemplate, ObjectMapper mapper) {
+        this.restTemplate = restTemplate;
         this.mapper = mapper;
     }
 

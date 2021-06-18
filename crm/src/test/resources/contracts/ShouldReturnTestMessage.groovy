@@ -3,7 +3,10 @@ import org.springframework.cloud.contract.spec.Contract
 Contract.make {
     description "should return test message"
     request {
-        url "/api/s2s/test"
+        url value(
+                consumer("/api/s2s/test"),
+                producer("/test")
+        )
         method GET()
     }
     response {

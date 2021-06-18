@@ -33,11 +33,6 @@
             <artifactId>kotlin-reflect</artifactId>
             <scope>runtime</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.jetbrains.kotlin</groupId>-->
-<!--            <artifactId>kotlin-maven-noarg</artifactId>-->
-<!--            <version>${kotlin.version}</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -103,7 +98,6 @@
                 <extensions>true</extensions>
                 <configuration>
                     <baseClassForTests>com.legion.BaseClass</baseClassForTests>
-                    <testMode>EXPLICIT</testMode>
                 </configuration>
             </plugin>
             <plugin>
