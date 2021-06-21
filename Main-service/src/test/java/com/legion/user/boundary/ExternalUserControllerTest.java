@@ -11,15 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.time.Instant;
-import java.util.Objects;
 import java.util.UUID;
-
-import static junit.framework.Assert.*;
-import static junit.framework.TestCase.assertEquals;
 
 @SpringBootTest
 @AutoConfigureStubRunner(ids = "com.legion:crm:+:stubs:8585", stubsMode = StubRunnerProperties.StubsMode.LOCAL)
@@ -55,16 +49,6 @@ class ExternalUserControllerTest {
                 .willReturn(WireMock.aResponse().withStatus(201).withBody(userJson)));
 
         // when
-        ResponseEntity<User> entity = userController.register(request);
-
-        // then
-//        assertEquals(HttpStatus.CREATED, entity.getStatusCode());
-//        assertNotNull(entity.getBody().getId());
-//        assertNotNull(entity.getBody().getCreateDate());
-//        assertNotNull(entity.getBody().getUpdateDate());
-//        assertEquals(request.getEmail(), entity.getBody().getEmail());
-//        assertEquals(request.getPassword(), entity.getBody().getPassword());
-//        assertEquals(request.getUserType(), entity.getBody().getUserType());
-//        assertFalse(entity.getBody().isRemoved());
+        userController.register(request);
     }
 }
