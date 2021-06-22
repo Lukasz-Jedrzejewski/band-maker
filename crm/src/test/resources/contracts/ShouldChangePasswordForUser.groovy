@@ -5,22 +5,21 @@ import org.springframework.cloud.contract.spec.Contract
 import java.util.regex.Pattern
 
 Contract.make {
-    description "should register new user"
+    description "should change password for user with given id"
     request {
-        url "/users"
-        method POST()
+        urlPath(value(consumer(regex('/users/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}')))) {
+            queryParameters {
+                parameter 'newPassword': value(anyNonEmptyString())
+            }
+        }
+        method PUT()
         headers {
             header 'Content-Type': 'application/json'
         }
-        body (
-                email: value(anyEmail()),
-                password: value(anyNonEmptyString()),
-                userType: "MUSICIAN"
-        )
 
     }
     response {
-        status 201
+        status 200
         headers {
             header 'Content-Type': 'application/json'
         }

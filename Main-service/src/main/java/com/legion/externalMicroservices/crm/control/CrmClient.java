@@ -48,7 +48,7 @@ public class CrmClient extends PathBuilder {
         return restTemplate.exchange(uri, HttpMethod.GET, null, Boolean.class);
     }
 
-    public ResponseEntity<?> setPassword(String newPassword, UUID id) {
+    public ResponseEntity<User> setPassword(String newPassword, UUID id) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add(NEW_PASSWORD_PARAM, newPassword);
         String uri = buildUri(buildUrl(url, USER_PATH+"/"+id), params);

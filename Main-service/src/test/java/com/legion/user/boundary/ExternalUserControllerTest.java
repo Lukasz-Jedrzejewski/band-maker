@@ -1,18 +1,17 @@
 package com.legion.user.boundary;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.legion.externalMicroservices.crm.identityObjects.RegisterRequest;
-import com.legion.externalMicroservices.crm.identityObjects.User;
 import com.legion.externalMicroservices.crm.identityObjects.UserType;
+import com.legion.user.model.PasswordResetRequest;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 
-import java.time.Instant;
 import java.util.UUID;
 
 @SpringBootTest
@@ -21,34 +20,33 @@ import java.util.UUID;
 class ExternalUserControllerTest {
 
     @Autowired
-    ObjectMapper objectMapper;
-
-    @Autowired
     ExternalUserController userController;
 
     @Test
-    void register() throws Exception {
+    void register() {
         // given
         RegisterRequest request = new RegisterRequest();
-        request.setEmail("contractsamail@gmail.com");
-        request.setPassword("HereShouldBeEncodedPassword");
+        request.setEmail(Mockito.anyString());
+        request.setPassword(Mockito.anyString());
         request.setUserType(UserType.MUSICIAN);
 
-        User user = new User();
-        user.setId(UUID.randomUUID());
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
-        user.setUserType(request.getUserType().toString());
-        user.setCreateDate(Instant.now());
-        user.setUpdateDate(Instant.now());
-        user.setRemoved(false);
-
-        String userJson = objectMapper.writeValueAsString(user);
-
         WireMock.stubFor(WireMock.post(WireMock.urlEqualTo("/api/s2s/users"))
-                .willReturn(WireMock.aResponse().withStatus(201).withBody(userJson)));
+                .willReturn(WireMock.aResponse().withStatus(201).withBody(Mockito.anyString())));
 
         // when
         userController.register(request);
+    }
+
+    @Test
+    void setPassword() {
+        // given
+        UUID id = UUID.randomUUID();
+        PasswordResetRequest request = new PasswordResetRequest("aaaaAAAA12@", "aaaaAAAA12@");
+
+        WireMock.stubFor(WireMock.put(WireMock.urlEqualTo("/api/s2s/users/"+id+"?newPassword="+request.getNewPassword()))
+                .willReturn(WireMock.aResponse().withStatus(201).withBody(Mockito.anyString())));
+
+        // when
+        userController.setPassword(id, request);
     }
 }
