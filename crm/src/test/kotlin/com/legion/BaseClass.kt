@@ -38,6 +38,7 @@ open class BaseClass {
 
         whenever(userRepository.save(any())).thenReturn(user)
         whenever(userRepository.getById(any())).thenReturn(user)
+        whenever(userRepository.existsByEmail(any())).thenReturn(true)
 
         whenever(bandDataRepository.existsByUserId(any())).thenReturn(false)
         whenever(bandDataRepository.findByUserId(any())).thenReturn(bandData)

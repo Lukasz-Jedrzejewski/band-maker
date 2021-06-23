@@ -39,6 +39,14 @@ class CrmClientTest {
 
     @Test
     void existsByEmail() {
+        // given
+        String email = "randomemail@gmail.com";
+
+        WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/api/s2s/users?email="+email))
+        .willReturn(WireMock.aResponse().withStatus(200).withBody(String.valueOf(Mockito.anyBoolean()))));
+
+        // when
+        crmClient.existsByEmail(email);
     }
 
     @Test
