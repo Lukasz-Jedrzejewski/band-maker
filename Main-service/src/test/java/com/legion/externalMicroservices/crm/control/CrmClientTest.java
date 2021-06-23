@@ -36,7 +36,7 @@ class CrmClientTest {
     }
 
     @Test
-    void existsByEmail() {
+    void should_check_if_user_with_given_email_already_exist() {
         // given
         String email = "randomemail@gmail.com";
 
@@ -61,7 +61,7 @@ class CrmClientTest {
     }
 
     @Test
-    void getById() {
+    void should_return_user_with_given_id() {
         // given
         UUID id = UUID.randomUUID();
 
@@ -73,7 +73,7 @@ class CrmClientTest {
     }
 
     @Test
-    void savePersonalData() {
+    void should_save_personal_data_for_given_user() {
         // given
         UUID id = UUID.randomUUID();
         PersonalDataRequest request = new PersonalDataRequest();
@@ -93,7 +93,23 @@ class CrmClientTest {
     }
 
     @Test
-    void saveInstitutionData() {
+    void should_save_institution_data_for_given_user() {
+        // given
+        UUID id = UUID.randomUUID();
+        InstitutionDataRequest request = new InstitutionDataRequest();
+        request.setName(Mockito.anyString());
+        request.setCity(Mockito.anyString());
+        request.setStreet(Mockito.anyString());
+        request.setStreetNumber(Mockito.anyString());
+        request.setLocalNumber(Mockito.anyString());
+        request.setPhoneNumber(Mockito.anyString());
+        request.setDescription(Mockito.anyString());
+
+        WireMock.stubFor(WireMock.post(WireMock.urlEqualTo("/api/s2s/institution-data/"+id))
+                .willReturn(WireMock.aResponse().withStatus(201).withBody(Mockito.anyString())));
+
+        // when
+        crmClient.saveInstitutionData(id, request);
     }
 
     @Test

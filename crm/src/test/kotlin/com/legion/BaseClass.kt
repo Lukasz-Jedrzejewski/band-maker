@@ -3,11 +3,15 @@ package com.legion
 import com.legion.band.boundary.BandDataController
 import com.legion.band.control.BandDataRepository
 import com.legion.band.control.BandDataService
+import com.legion.institutionData.boundary.InstitutionDataController
+import com.legion.institutionData.control.InstitutionDataRepository
+import com.legion.institutionData.control.InstitutionDataService
 import com.legion.personalData.boundary.PersonalDataController
 import com.legion.personalData.control.PersonalDataRepository
 import com.legion.personalData.control.PersonalDataService
 import com.legion.test.TestController
 import com.legion.tools.objectFactories.getTestBandData
+import com.legion.tools.objectFactories.getTestInstitutionData
 import com.legion.tools.objectFactories.getTestPersonalData
 import com.legion.tools.objectFactories.getTestUser
 import com.legion.user.boundary.UserController
@@ -32,19 +36,25 @@ open class BaseClass {
     @Mock
     lateinit var personalDataRepository: PersonalDataRepository
 
-    lateinit var userService: UserService
-    lateinit var bandDataService: BandDataService
-    lateinit var personalDataService: PersonalDataService
+    @Mock
+    lateinit var institutionDataRepository: InstitutionDataRepository
+
+    private lateinit var userService: UserService
+    private lateinit var bandDataService: BandDataService
+    private lateinit var personalDataService: PersonalDataService
+    private lateinit var institutionDataService: InstitutionDataService
 
     private val user = getTestUser()
     private val bandData = getTestBandData(user = user)
     private val personalData = getTestPersonalData(user = user)
+    private val institutionData = getTestInstitutionData(user = user)
 
     @BeforeEach
     fun setUp() {
         userService = UserService(userRepository)
         bandDataService = BandDataService(bandDataRepository, userService)
         personalDataService = PersonalDataService(personalDataRepository, userService)
+        institutionDataService = InstitutionDataService(institutionDataRepository, userService)
 
         whenever(userRepository.save(any())).thenReturn(user)
         whenever(userRepository.getById(any())).thenReturn(user)
@@ -58,9 +68,14 @@ open class BaseClass {
         whenever(personalDataRepository.findByUserId(any())).thenReturn(personalData)
         whenever(personalDataRepository.save(any())).thenReturn(personalData)
 
+        whenever(institutionDataRepository.existsByUserId(any())).thenReturn(false)
+        whenever(institutionDataRepository.findByUserId(any())).thenReturn(institutionData)
+        whenever(institutionDataRepository.save(any())).thenReturn(institutionData)
+
         RestAssuredMockMvc.standaloneSetup(TestController(),
                 UserController(userService),
                 BandDataController(bandDataService),
-                PersonalDataController(personalDataService))
+                PersonalDataController(personalDataService),
+                InstitutionDataController(institutionDataService))
     }
 }
