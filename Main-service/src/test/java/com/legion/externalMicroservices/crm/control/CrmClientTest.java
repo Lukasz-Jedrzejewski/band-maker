@@ -1,9 +1,7 @@
 package com.legion.externalMicroservices.crm.control;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
-import com.legion.externalMicroservices.crm.identityObjects.BandDataRequest;
-import com.legion.externalMicroservices.crm.identityObjects.RegisterRequest;
-import com.legion.externalMicroservices.crm.identityObjects.UserType;
+import com.legion.externalMicroservices.crm.identityObjects.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +74,22 @@ class CrmClientTest {
 
     @Test
     void savePersonalData() {
+        // given
+        UUID id = UUID.randomUUID();
+        PersonalDataRequest request = new PersonalDataRequest();
+        request.setName(Mockito.anyString());
+        request.setSurname(Mockito.anyString());
+        request.setCity(Mockito.anyString());
+        request.setAlias(Mockito.anyString());
+        request.setInstrument(Mockito.anyString());
+        request.setVocal(Mockito.anyBoolean());
+        request.setDescription(Mockito.anyString());
+
+        WireMock.stubFor(WireMock.post(WireMock.urlEqualTo("/api/s2s/personal-data/"+id))
+                .willReturn(WireMock.aResponse().withStatus(201).withBody(Mockito.anyString())));
+
+        // when
+        crmClient.savePersonalData(id, request);
     }
 
     @Test

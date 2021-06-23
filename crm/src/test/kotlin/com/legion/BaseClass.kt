@@ -3,8 +3,12 @@ package com.legion
 import com.legion.band.boundary.BandDataController
 import com.legion.band.control.BandDataRepository
 import com.legion.band.control.BandDataService
+import com.legion.personalData.boundary.PersonalDataController
+import com.legion.personalData.control.PersonalDataRepository
+import com.legion.personalData.control.PersonalDataService
 import com.legion.test.TestController
 import com.legion.tools.objectFactories.getTestBandData
+import com.legion.tools.objectFactories.getTestPersonalData
 import com.legion.tools.objectFactories.getTestUser
 import com.legion.user.boundary.UserController
 import com.legion.user.control.UserRepository
@@ -25,16 +29,22 @@ open class BaseClass {
     @Mock
     lateinit var bandDataRepository: BandDataRepository
 
+    @Mock
+    lateinit var personalDataRepository: PersonalDataRepository
+
     lateinit var userService: UserService
     lateinit var bandDataService: BandDataService
+    lateinit var personalDataService: PersonalDataService
 
     private val user = getTestUser()
     private val bandData = getTestBandData(user = user)
+    private val personalData = getTestPersonalData(user = user)
 
     @BeforeEach
     fun setUp() {
         userService = UserService(userRepository)
         bandDataService = BandDataService(bandDataRepository, userService)
+        personalDataService = PersonalDataService(personalDataRepository, userService)
 
         whenever(userRepository.save(any())).thenReturn(user)
         whenever(userRepository.getById(any())).thenReturn(user)
@@ -44,8 +54,13 @@ open class BaseClass {
         whenever(bandDataRepository.findByUserId(any())).thenReturn(bandData)
         whenever(bandDataRepository.save(any())).thenReturn(bandData)
 
+        whenever(personalDataRepository.existsByUserId(any())).thenReturn(false)
+        whenever(personalDataRepository.findByUserId(any())).thenReturn(personalData)
+        whenever(personalDataRepository.save(any())).thenReturn(personalData)
+
         RestAssuredMockMvc.standaloneSetup(TestController(),
                 UserController(userService),
-                BandDataController(bandDataService))
+                BandDataController(bandDataService),
+                PersonalDataController(personalDataService))
     }
 }
