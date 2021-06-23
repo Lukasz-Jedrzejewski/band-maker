@@ -64,6 +64,14 @@ class CrmClientTest {
 
     @Test
     void getById() {
+        // given
+        UUID id = UUID.randomUUID();
+
+        WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/api/s2s/users/"+id))
+        .willReturn(WireMock.aResponse().withStatus(200).withBody(Mockito.anyString())));
+
+        // when
+        crmClient.getById(id);
     }
 
     @Test
