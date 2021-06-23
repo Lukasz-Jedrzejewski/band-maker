@@ -1,6 +1,5 @@
 package com.legion.user.control;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.legion.externalMicroservices.crm.control.CrmClient;
 import com.legion.externalMicroservices.crm.identityObjects.RegisterRequest;
 import com.legion.externalMicroservices.crm.identityObjects.User;
@@ -20,7 +19,6 @@ public class ExternalUserService {
 
     private final BCryptPasswordEncoder passwordEncoder;
     private final CrmClient crmClient;
-    private final ObjectMapper mapper;
 
     public ResponseEntity<User> register(RegisterRequest request) {
         request.setPassword(passwordEncoder.encode(request.getPassword()));
