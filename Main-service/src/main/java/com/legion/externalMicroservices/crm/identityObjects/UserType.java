@@ -3,7 +3,7 @@ package com.legion.externalMicroservices.crm.identityObjects;
 public enum UserType {
 
     MUSICIAN("muzyk"),
-    BAND("zezpół"),
+    BAND("zespół"),
     LOCAL("lokal");
 
     private String type;
@@ -19,7 +19,7 @@ public enum UserType {
 
     public static UserType getByName(String name) {
         for(UserType type: values()) {
-            if (type.name().equals(name)) {
+            if (type.type.equals(name)) {
                 return type;
             }
         }

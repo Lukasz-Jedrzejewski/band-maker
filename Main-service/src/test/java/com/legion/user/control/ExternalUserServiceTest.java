@@ -1,7 +1,7 @@
 package com.legion.user.control;
 
 import com.legion.externalMicroservices.crm.control.CrmClient;
-import com.legion.externalMicroservices.crm.identityObjects.User;
+import com.legion.externalMicroservices.crm.identityObjects.*;
 import com.legion.user.model.PasswordResetRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,10 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 class ExternalUserServiceTest {
@@ -83,5 +84,65 @@ class ExternalUserServiceTest {
         // then
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(user, result.getBody());
+    }
+
+    @Test
+    void should_save_or_update_band_data() {
+        // given
+        Object obj = mock(Object.class);
+        UUID id = UUID.randomUUID();
+        BandData data = mock(BandData.class);
+        User user = new User(id, "", UserType.BAND.toString(), "", Instant.now(), Instant.now(), false);
+        Mockito.when(crmClient.getById(Mockito.any())).thenReturn(ResponseEntity.ok(user));
+        Mockito.when(crmClient.saveBandData(Mockito.any(), Mockito.any())).thenReturn(ResponseEntity.ok(data));
+
+        // when
+        ResponseEntity<?> result = userService.saveUserData(id, obj);
+
+        // then
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(data, result.getBody());
+        verify(crmClient, times(1)).getById(any());
+        verify(crmClient, times(1)).saveBandData(any(), any());
+    }
+
+    @Test
+    void should_save_or_update_institution_data() {
+        // given
+        Object obj = mock(Object.class);
+        UUID id = UUID.randomUUID();
+        InstitutionData data = mock(InstitutionData.class);
+        User user = new User(id, "", UserType.LOCAL.toString(), "", Instant.now(), Instant.now(), false);
+        Mockito.when(crmClient.getById(Mockito.any())).thenReturn(ResponseEntity.ok(user));
+        Mockito.when(crmClient.saveInstitutionData(Mockito.any(), Mockito.any())).thenReturn(ResponseEntity.ok(data));
+
+        // when
+        ResponseEntity<?> result = userService.saveUserData(id, obj);
+
+        // then
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(data, result.getBody());
+        verify(crmClient, times(1)).getById(any());
+        verify(crmClient, times(1)).saveInstitutionData(any(), any());
+    }
+
+    @Test
+    void should_save_or_update_personal_data() {
+        // given
+        Object obj = mock(Object.class);
+        UUID id = UUID.randomUUID();
+        PersonalData data = mock(PersonalData.class);
+        User user = new User(id, "", UserType.MUSICIAN.toString(), "", Instant.now(), Instant.now(), false);
+        Mockito.when(crmClient.getById(Mockito.any())).thenReturn(ResponseEntity.ok(user));
+        Mockito.when(crmClient.savePersonalData(Mockito.any(), Mockito.any())).thenReturn(ResponseEntity.ok(data));
+
+        // when
+        ResponseEntity<?> result = userService.saveUserData(id, obj);
+
+        // then
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(data, result.getBody());
+        verify(crmClient, times(1)).getById(any());
+        verify(crmClient, times(1)).savePersonalData(any(), any());
     }
 }

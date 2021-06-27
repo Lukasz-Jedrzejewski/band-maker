@@ -62,21 +62,21 @@ public class CrmClient extends PathBuilder {
         return restTemplate.exchange(uri, HttpMethod.GET, null, User.class);
     }
 
-    public ResponseEntity<?> savePersonalData(UUID id, Object object) {
+    public ResponseEntity<PersonalData> savePersonalData(UUID id, Object object) {
         PersonalDataRequest personalData = mapper.convertValue(object, PersonalDataRequest.class);
         String uri = buildUri(buildUrl(url, PERSONAL_DATA_PATH+"/"+id), null);
 
         return restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(personalData), PersonalData.class);
     }
 
-    public ResponseEntity<?> saveInstitutionData(UUID id, Object object) {
+    public ResponseEntity<InstitutionData> saveInstitutionData(UUID id, Object object) {
         InstitutionDataRequest institutionData = mapper.convertValue(object, InstitutionDataRequest.class);
         String uri = buildUri(buildUrl(url, INSTITUTION_DATA_PATH+"/"+id), null);
 
         return restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(institutionData), InstitutionData.class);
     }
 
-    public ResponseEntity<?> saveBandData(UUID id, Object object) {
+    public ResponseEntity<BandData> saveBandData(UUID id, Object object) {
         BandDataRequest bandData = mapper.convertValue(object, BandDataRequest.class);
         String uri = buildUri(buildUrl(url, BAND_DATA_PATH+"/"+id), null);
 
