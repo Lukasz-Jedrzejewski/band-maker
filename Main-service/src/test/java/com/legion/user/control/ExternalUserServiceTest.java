@@ -33,6 +33,20 @@ class ExternalUserServiceTest {
     }
 
     @Test
+    void should_register_new_user() {
+        RegisterRequest request = mock(RegisterRequest.class);
+        User user = mock(User.class);
+        when(crmClient.register(any())).thenReturn(ResponseEntity.ok(user));
+
+        ResponseEntity<User> result = userService.register(request);
+
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(user, result.getBody());
+        verify(crmClient, times(1)).register(any());
+        verify(passwordEncoder, times(1)).encode(any());
+    }
+
+    @Test
     void should_check_if_given_email_already_exist_and_return_false() {
         // given
         String email = "test@gmail.com";
