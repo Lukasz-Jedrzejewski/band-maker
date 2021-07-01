@@ -32,7 +32,8 @@ public class ExternalUserService {
 
     public ResponseEntity<?> changePassword(PasswordResetRequest request, UUID id) {
         if (request.getNewPassword().equals(request.getConfirmPassword())) {
-            return crmClient.setPassword(request.getNewPassword(), id);
+            String hashed = passwordEncoder.encode(request.getNewPassword());
+            return crmClient.setPassword(hashed, id);
         } else {
             return new ResponseEntity<String>("The passwords don`t match", HttpStatus.CONFLICT);
         }
@@ -45,17 +46,36 @@ public class ExternalUserService {
         ResponseEntity<?> result = null;
         switch (type) {
             case BAND:
-                result = crmClient.saveBandData(user.getId(), object);
+                try {
+                    result = crmClient.saveBandData(user.getId(), object);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result = throwMessage();
+                }
                 break;
             case LOCAL:
-                result = crmClient.saveInstitutionData(user.getId(), object);
+                try {
+                    result = crmClient.saveInstitutionData(user.getId(), object);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result = throwMessage();
+                }
                 break;
             case MUSICIAN:
-                 result = crmClient.savePersonalData(user.getId(), object);
+                try {
+                    result = crmClient.savePersonalData(user.getId(), object);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    result = throwMessage();
+                }
                 break;
             default:
                 break;
         }
         return result;
+    }
+
+    private ResponseEntity<String> throwMessage() {
+        return new ResponseEntity<>("The data provided does not match the user's model", HttpStatus.CONFLICT);
     }
 }

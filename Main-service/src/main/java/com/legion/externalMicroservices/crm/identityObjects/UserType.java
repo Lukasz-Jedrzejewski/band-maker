@@ -2,9 +2,9 @@ package com.legion.externalMicroservices.crm.identityObjects;
 
 public enum UserType {
 
-    MUSICIAN("muzyk"),
-    BAND("zespół"),
-    LOCAL("lokal");
+    MUSICIAN("musician"),
+    BAND("band"),
+    LOCAL("local");
 
     private String type;
 
@@ -18,9 +18,9 @@ public enum UserType {
     }
 
     public static UserType getByName(String name) {
-        for(UserType type: values()) {
-            if (type.type.equals(name)) {
-                return type;
+        for(UserType t: values()) {
+            if (t.type.equalsIgnoreCase(name)) {
+                return t;
             }
         }
         return null;
