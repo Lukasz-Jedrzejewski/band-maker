@@ -11,6 +11,8 @@
 
     <artifactId>crm</artifactId>
 
+<!--    <packaging>pom</packaging>-->
+
     <properties>
         <kotlin.version>1.5.0</kotlin.version>
     </properties>
@@ -30,11 +32,6 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-maven-noarg</artifactId>
-            <version>${kotlin.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -66,11 +63,43 @@
             <artifactId>kotlin-logging</artifactId>
             <version>1.12.5</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-contract-verifier</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-contract-wiremock</artifactId>
+            <version>3.0.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>4.4.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>spring-mock-mvc</artifactId>
+            <version>4.4.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-contract-maven-plugin</artifactId>
+                <version>3.0.3</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <baseClassForTests>com.legion.BaseClass</baseClassForTests>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -89,12 +118,21 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
+
                 <configuration>
                     <compilerPlugins>
                         <plugin>jpa</plugin>
-                        <jvmTarget>1.8</jvmTarget>
                     </compilerPlugins>
                 </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-noarg</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
+
                 <executions>
                     <execution>
                         <id>compile</id>

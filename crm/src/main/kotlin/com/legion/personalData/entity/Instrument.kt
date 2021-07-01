@@ -1,6 +1,6 @@
 package com.legion.personalData.entity
 
-enum class Instrument(val instrumentName: String) {
+enum class Instrument(private val instrumentName: String) {
     ELECTRIC_GUITAR("gitara elektryczna"),
     BASS_GUITAR("gitara basowa"),
     CLASSIC_GUITAR("gitara klasyczna"),
