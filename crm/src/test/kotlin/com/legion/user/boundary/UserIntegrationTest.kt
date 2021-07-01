@@ -87,4 +87,59 @@ class UserIntegrationTest {
         assertThat(result[0].email).isEqualTo(user.email)
         assertThat(result[0].password).isEqualTo(newPassword)
     }
+
+    @Test
+    fun `should return true if user with given email already exist`() {
+        // given
+        val saved = userRepository.save(user)
+
+        // when
+        val result = mvc.perform(MockMvcRequestBuilders
+                .get("/users")
+                .param("email", saved.email)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andReturn().response
+
+        // then
+        assertThat(result).isNotEqualTo(true)
+    }
+
+    @Test
+    fun `should return false if user with given email not exist`() {
+        // given
+        val email = "example@mail.com"
+
+        // when
+        val result = mvc.perform(MockMvcRequestBuilders
+                .get("/users")
+                .param("email", email)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andReturn().response
+
+        // then
+        assertThat(result).isNotEqualTo(false)
+    }
+
+    @Test
+    fun `should return user with given id`() {
+        // given
+        val saved = userRepository.save(user)
+
+        // when
+        mvc.perform(MockMvcRequestBuilders
+                .get("/users/${saved.id}", saved.id)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(saved.id.toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(saved.email))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.userType").value(saved.userType.toString()))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+
+        // then
+        val result = userRepository.getById(user.id)
+        assertThat(result.id).isEqualTo(saved.id)
+        assertThat(result.email).isEqualTo(saved.email)
+        assertThat(result.password).isEqualTo(saved.password)
+    }
 }

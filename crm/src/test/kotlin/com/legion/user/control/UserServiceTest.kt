@@ -72,5 +72,29 @@ class UserServiceTest {
         assertThat(result).isEqualTo(updated)
     }
 
+    @Test
+    fun `should return true if user with given email already exist`() {
+        // given
+        whenever(userRepository.existsByEmail(any())).thenReturn(true)
 
+        // when
+        val result = userService.existsByEmail(user.email)
+
+        // then
+        verify(userRepository, times(1)).existsByEmail(any())
+        assertThat(result).isTrue
+    }
+
+    @Test
+    fun `should return false when user with given email does not exist`() {
+        // given
+        whenever(userRepository.existsByEmail(any())).thenReturn(false)
+
+        // when
+        val result = userService.existsByEmail("test@m.com")
+
+        // then
+        verify(userRepository, times(1)).existsByEmail(any())
+        assertThat(result).isFalse
+    }
 }
