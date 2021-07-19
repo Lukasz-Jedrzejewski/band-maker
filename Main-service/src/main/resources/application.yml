@@ -7,9 +7,9 @@ general:
     host: localhost
     port: 5433
     databasename: band_maker
-    schemaname: general
+    schemaname: public
     username: postgres
-    password: Hijikata1868
+    password: postgres
 
   communication:
     crm:
